@@ -1,0 +1,8 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" >
+    <mat-icon class="text-orange-400">more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="updateItem(pays)" > Update </button>
+    <button mat-menu-item (click)="deleteItem(pays._id)"> Delete </button>
+    <!-- <button mat-menu-item> Delete {{pays.country_code+'-'+pays.country_indic}} </button> -->
+  </mat-menu>

@@ -1,0 +1,153 @@
+   <div class="md:mx-3 md:p-4">
+    <div class="flex flex-col justify-center items-center text-center">
+      <img src="assets/bootstrap-logo.svg" alt="Logo" width="100" height="100" class="align-text-top">
+      <h4 [ngClass]="requestResponse ? 'mb-2' : 'mb-12'" class=" mt-1 pb-1 text-xl font-semibold">
+        Creation de compte partenaire
+      </h4>
+      @if(requestResponse) {
+        <div class="mb-4 rounded-lg p-3 text-base text-success-700"
+          [ngClass]="requestResponse.status === 200 ? 'bg-green-200' : ['bg-red-300', 'text-black']"
+          role="alert">
+          {{requestResponse.message}}
+        </div>
+      }
+    </div>
+
+    <form [formGroup]="registerForm">
+      <p class="mb-4">Creer votre compte bedoo</p>
+      <div class="relative mb-2" data-te-input-wrapper-init>
+          <label for="name" class="block text-sm font-medium leading-6 text-gray-900"> Votre nom </label>
+          <div class="mt-1">
+            <input formControlName="name" id="name" name="name" type="text" autocomplete="your name" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          @if(f['name'].touched) {
+            <div class="text-red-700">
+                @if (f['name'].errors?.['minlength']) {
+                    <span>(5) caracteres minimum requis</span>
+                }
+                @if (f['name'].errors?.['required']) {
+                  <span>Le nom est obligatoire</span>
+                }
+            </div> 
+          }
+      </div>
+      <div class="relative mb-2" data-te-input-wrapper-init>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Votre adresse email</label>
+        <div class="mt-1">
+          <input formControlName="email" id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+        @if(f['email'].touched) {
+          <div class="text-red-700">
+              @if (f['email'].errors?.['email']) {
+                  <span>email Invalide</span>
+              }
+              @if (f['email'].errors?.['required']) {
+                <span>l'email est obligatore</span>
+              }
+          </div> 
+      }
+      </div>
+      
+      <div class="relative mb-2" data-te-input-wrapper-init>
+          <div class="grid grid-rows-1 grid-flow-col gap-2">
+
+              <div class="relative ">
+                  <label for="phone_number" class="block text-sm font-medium leading-6 text-gray-900">Numero téléphone</label>
+                  <div class="mt-1">
+                    <input formControlName="phone_number" id="phone_number" name="phone_number" type="text" autocomplete="Your phone number" required class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  </div>
+                  @if(f['phone_number'].touched) {
+                    <div class="text-red-700">
+                        @if (f['phone_number'].errors?.['minlength']) {
+                            <span>(10) chiffres minimum requis</span>
+                        }
+                        @if (f['phone_number'].errors?.['required']) {
+                          <span>Le num° de téléphone est obligatoire</span>
+                        }
+                    </div> 
+                  }
+              </div>
+
+              <!-- <div class="relative">
+                  <label for="user_type" class="block text-sm font-medium leading-6 text-gray-900">type utilisateur</label>
+                  <div class="mt-1">
+                  <input formControlName="user_type" id="user_type" name="user_type" type="text" autocomplete="Your phone number" required class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  </div>
+              </div> -->
+
+          </div>
+      </div>
+
+      <div class="relative mb-2" data-te-input-wrapper-init>
+          <div class="grid grid-rows-1 grid-flow-col gap-2">
+            <div class="relative ">
+              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Votre mot de passe</label>
+              <div class="mt-1">
+                  <input formControlName="password" id="password" name="password" type="{{inputType}}" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+              @if(f['password'].touched) {
+                <div class="text-red-700">
+                    @if (f['password'].errors?.['minlength']) {
+                      <span>Au moins 7 caractères requis</span>
+                    }
+                    @if (f['password'].errors?.['required']) {
+                      <span>password is required</span>
+                    }
+                </div> 
+              }
+          </div>
+          <div class="relative ">
+              <label for="confpwd" class="block text-sm font-medium leading-6 text-gray-900">Confirmation mot de passe</label>
+              <div class="mt-1 flex flex-row justify-start">
+                <input formControlName="confirmPwd" id="confpwd" name="confpwd" type="{{inputType}}"  required class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <button
+                    type="button"
+                    (click)="changeInputType()"
+                    class="inline-block rounded-r-md z-30 bg-neutral-100 px-2 text-xs font-medium leading-normal text-neutral-800 ">
+                    @switch (inputType) {
+                      @case ("password") {
+                        <ng-icon name="heroEyeSlash" size="20"></ng-icon>
+                      }
+                      @case ("text") {
+                        <ng-icon name="heroEye" size="20"></ng-icon>
+                      }
+                  }
+                </button>
+              </div>
+              @if(f['confirmPwd'].touched) {
+                <div class="text-red-700">
+                    @if (f['confirmPwd'].errors?.['minlength']) {
+                      <span>Au moins 7 caractères requis</span>
+                    }
+                    @if (f['confirmPwd'].errors?.['required']) {
+                      <span>password is required</span>
+                    }
+                </div> 
+              }
+          </div>
+              
+          </div>
+      </div>
+
+      <div class="mb-1 pb-1 pt-1 items-center text-center">
+        <button
+          type="boutton" [disabled]="registerForm.invalid" (click)="register()"
+          class="mb-1 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+          type="button"
+          data-te-ripple-init
+          data-te-ripple-color="light"
+          [ngClass] = "registerForm.invalid ? ['bg-gray-500', 'hover:cursor-not-allowed'] : ['bg-orange-500']"
+          >
+          Log in
+        </button>
+
+      </div>
+
+      <div class="flex items-center justify-end pb-6">
+        <!-- <a href="#!" routerLink="/security/auth" class="font-semibold text-indigo-600 hover:text-indigo-500">
+          Retour à la connection
+        </a> -->
+        <a href="#!" routerLink="/security/auth" class="font-semibold text-indigo-600 hover:text-indigo-500">Retour à la connection</a>
+      </div>
+    </form>
+</div>

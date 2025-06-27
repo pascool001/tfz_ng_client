@@ -1,0 +1,77 @@
+
+<div class="flex w-screen flex-1 flex-row mt-4 pr-4">
+
+    <ul class="flex-column p-5 space-y-4 text-sm font-medium text-gray-500
+     dark:text-gray-400 md:me-4 mb-4 md:mb-0 mx-4 border-2 border-red-500 w-72">
+        <li role="presentation">
+            <a  (click)="routeToComp('country')"
+            [ngClass]="compName=='country' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+            ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+            class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+            aria-current="page"
+            >
+                <ng-icon name="heroFlag" class="text-2xl mr-1" [ngClass]="compName=='country'? ['text-lime-400']:['text-blue-700'] " />
+                Country
+            </a>
+        </li>
+        <li role="presentation">
+            <a (click)="routeToComp('profil')"
+            [ngClass]="compName=='profil' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+            ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+            class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+            >
+                <ng-icon name="heroUserGroup" class="text-2xl mr-1" [ngClass]="compName=='profil'? ['text-lime-400']:['text-blue-700'] "  />
+                User profil
+            </a>
+        </li>
+        <li role="presentation">
+            <a (click)="routeToComp('service')"
+              [ngClass]="compName=='service' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+              ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+              class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+              >
+                <ng-icon name="heroSparkles" class="text-2xl mr-1" [ngClass]="compName=='service'? ['text-lime-400']:['text-blue-700'] "  />
+                Services
+            </a>
+        </li>
+        <li role="presentation">
+            <a  (click)="routeToComp('transfer-type')"
+            [ngClass]="compName=='transfer-type' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+            ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+            class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+            >
+              <ng-icon name="heroForward" class="text-2xl mr-1" [ngClass]="compName=='transfer-type'? ['text-lime-400']:['text-blue-700'] "  />
+              Transfert Type
+            </a>
+        </li>
+
+        <li role="presentation">
+            <a (click)="routeToComp('wallet')"
+             [ngClass]="compName=='wallet' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+            ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+            class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+             >
+              <ng-icon name="heroClipboardDocumentCheck" class="text-2xl mr-1" [ngClass]="compName=='wallet'? ['text-lime-400']:['text-blue-700'] "  />
+                Wallet management
+            </a>
+        </li>
+        <li role="presentation">
+            <a (click)="routeToComp('wallet-pricing')"
+             [ngClass]="compName=='wallet-pricing' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+            ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
+            class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
+             >
+              <ng-icon name="heroClipboardDocumentCheck" class="text-2xl mr-1" [ngClass]="compName=='wallet-pricing'? ['text-lime-400']:['text-blue-700'] "  />
+                Wallets pricing
+            </a>
+        </li>
+    </ul>
+
+    <div class="p-6  bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+
+        <router-outlet></router-outlet>
+    </div>
+
+
+</div>
+

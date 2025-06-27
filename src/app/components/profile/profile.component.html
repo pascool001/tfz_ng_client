@@ -1,0 +1,46 @@
+<button
+    id="dropdownDefaultButton"
+    data-dropdown-toggle="dropdown"
+    class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-1 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"
+>
+    <img alt="tania andrew"
+  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+  class="relative inline-block object-cover object-center w-8 h-8 rounded-full cursor-pointer"
+  />
+</button>
+
+<div  id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-4 w-48 dark:bg-gray-700">
+    <ul  class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+        <li>
+        <a href="javascript:void(0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+           <ng-icon name="heroPresentationChartBar" class="text-2xl mr-1 text-blue-700 py-2" />
+          Dashboard
+        </a>
+        </li>
+        <li>
+        <a href="javascript:void(0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          <ng-icon name="heroUser" class="text-2xl mr-1 text-blue-700 py-2" />
+          Gérer mon compte
+        </a>
+        </li>
+        <li>
+        <a href="javascript:void(0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+           <ng-icon name="heroCog8Tooth" class="text-2xl mr-1 text-blue-700 py-2" />
+          Settings
+        </a>
+        </li>
+        <li>
+        <a href="javascript:void(0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+          <ng-icon name="heroBanknotes" class="text-2xl mr-1 text-blue-700 py-2" />
+          Earnings
+        </a>
+        </li>
+        <li class="py-2">
+          <a href="javascript:void(0)" (click)="disconnect()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+            <ng-icon name="heroXCircle" class="text-2xl mr-1 text-red-700 py-2" />
+            Sign out
+          </a>
+        </li>
+    </ul>
+</div>
+

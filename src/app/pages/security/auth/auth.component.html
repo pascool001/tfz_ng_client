@@ -1,0 +1,108 @@
+
+<div class="md:mx-3 md:p-4 ">
+  <div class="flex flex-col justify-center items-center text-center">
+    <img src="assets/bootstrap-logo.svg" alt="Logo" width="100" height="100" class="align-text-top">
+    <h4 [ngClass]="connectionError ? 'mb-4' : 'mb-12'" class=" mt-1 pb-1 text-xl font-semibold">
+      Authentification
+    </h4>
+    @if(connectionError) {
+      <div class="bg-red-200 text-dark-800 p-4 text-sm rounded border border-red-300 ">
+        {{ connectionErrorMessage }}
+      </div>
+    }
+  </div>
+
+<form [formGroup]="authForm" >
+  <p class="mb-4  text-center">Veuillez-vous connecter à votre compte svp.</p>
+
+  <div class="relative mb-2" data-te-input-wrapper-init>
+    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Votre adresse email</label>
+    <div class="mt-1">
+      <input formControlName="email" id="email" name="email" type="email" autocomplete="email" required
+      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+    </div>
+    @if(f['email'].touched) {
+      <div class="text-red-700">
+          @if (f['email'].errors?.['email']) {
+              <span>email is Invalid</span>
+          }
+          @if (f['email'].errors?.['required']) {
+            <span>email is required</span>
+          }
+      </div>
+  }
+  </div>
+
+  <div class="relative mb-4" data-te-input-wrapper-init>
+    <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Votre mot de passe</label>
+    <div class="mt-1  flex flex-row justify-start">
+      <input formControlName="password" id="password" name="password" type="{{inputType}}" autocomplete="current-password" required class="block w-full rounded-md z-40 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+      <button
+        type="button"
+        (click)="changeInputType()"
+        class="inline-block rounded-r-md z-30 bg-neutral-100 px-2 text-xs font-medium leading-normal text-neutral-800 ">
+        @switch (inputType) {
+          @case ("password") {
+            <ng-icon name="heroEyeSlash" size="20"></ng-icon>
+          }
+          @case ("text") {
+            <ng-icon name="heroEye" size="20"></ng-icon>
+          }
+      }
+      </button>
+    </div>
+
+    <!-- <span class="password-toggle-icon"><i class="fas fa-family"></i></span> -->
+    @if(f['password'].touched) {
+      <div class="text-red-700">
+          @if (f['password'].errors?.['minlength']) {
+            <span>Au moins 7 caractères requis</span>
+          }
+          @if (f['password'].errors?.['required']) {
+            <span>password is required</span>
+          }
+      </div>
+    }
+  </div>
+  @if(showSpinner) {
+    <div class="flex flex-row justify-center">
+        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-green-500 border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"> </div>
+    </div>
+  }
+
+  <!-- <div class="flex flex-row justify-between pb-1 pt-1 font-sans  w-100">
+    <a  href="javascript:void(0)" (click)="setSrvUser()"  class="font-semibold text-indigo-600 hover:text-indigo-500">
+      service user
+    </a>
+    <a  href="javascript:void(0)" (click)="setBoUser()"  class="font-semibold text-indigo-600 hover:text-indigo-500">
+      backoffice user
+    </a>
+  </div> -->
+
+  <div class="flex-col  mb-12 pb-1 pt-1">
+    <button type="boutton" [disabled]="authForm.invalid" (click)="connection()" class="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+      type="button" data-te-ripple-init data-te-ripple-color="light"
+      [ngClass] = "authForm.invalid ? ['bg-gray-500', 'hover:cursor-not-allowed'] : ['bg-orange-500']"
+      >
+      Connection
+    </button>
+
+    <div class="flex flex-row justify-end pb-1 pt-1  w-100">
+      <a  href="#!" routerLink="/security/forgotten-pwd" class="font-semibold text-indigo-600 hover:text-indigo-500">
+        J'ai oublié mon mot de passe
+      </a>
+
+    </div>
+  </div>
+
+  <!-- <div class="flex items-center justify-between pb-6">
+    <p class="mb-0 mr-2">Vous n'avez pas de compte partenaire?</p>
+    <div class="text-sm py-1.5">
+      <a href="#!" routerLink="/security/register" class="font-semibold text-indigo-600 hover:text-indigo-500">
+        creer votre compte
+      </a>
+    </div>
+  </div> -->
+</form>
+</div>

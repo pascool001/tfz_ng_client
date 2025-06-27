@@ -1,0 +1,43 @@
+<div class="relative sm:rounded-lg border-2 border-gray-200">
+
+  <div class="w-4/5 flex flex-row justify-center border-2 border-red-600 ">
+      <h5 class="text-center font-extrabold tracking-tight leading-none text-gray-400 md:text-2xl lg:text-2xl dark:text-white">
+        {{title}}
+      </h5>
+  </div>
+  <div class="w-4/5">
+    <app-country-select></app-country-select>
+  </div>
+  <!-- <div class="w-4/5 border-2 border-lime-800 mb-4">
+  </div> -->
+  <div class="flex flex-row  w-4/5 border-3 border-blue-700 gap-3 p-2">
+
+    <div class=" relative w-3/12  max-h-96 p-2 overflow-y-auto overflow-x-hidden ">
+      @for(couple of combinatedList; track $index) {
+        <app-transfer-direction [couple]="couple" (OnclickCouple)="onCoupleSelected($event)" ></app-transfer-direction>
+      }
+    </div>
+
+    <div class="w-9/12 border-2 border-blue-700 flex flex-col gap-3 p-3 ">
+
+        <div class="w-full border-2 flex flex-row justify-center border-lime-600 h-14">
+          <div class="w-11/12 flex flex-row justify-center items-center content-center">
+            @if(selectedCouple?.w_source?.wallet_name) {
+              <p class="text-xl ">
+                Tarification des transferts de <b> {{selectedCouple?.w_source?.wallet_name}} </b> vers <b> {{selectedCouple?.w_target?.wallet_name}} </b>
+              </p>
+            }
+          </div>
+          <div class="w-1/12 border-2 border-red-500 flex flex-row justify-end items-center content-center">
+            <button type="button" (click)="addPriceRange()" class=" w-10 h-10 text-white bg-blue-950 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <ng-icon name="heroPlus" class="text-xl"  />
+            </button>
+          </div>
+        </div>
+        <div class="w-full border-2  border-red-600 h-80">
+          <app-pricings-form [wallet_couple]="selectedCouple" [data]="wallet_transfer_Pricing"></app-pricings-form>
+        </div>
+
+    </div>
+  </div>
+</div>
