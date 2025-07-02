@@ -7,6 +7,7 @@ import { SettingsComponent } from '@pages/workspace/settings/settings.component'
 import { CountryComponent, ProfilComponent, ServiceComponent, TypeTransferComponent } from '@pages/workspace';
 import { WalletComponent } from '@pages/workspace/wallet/wallet.component';
 import { WalletTransfPricingComponent } from '@pages/workspace/wallet-transf-pricing/wallet-transf-pricing.component';
+import { TransferPricingComponent } from '@pages/workspace/transfer-pricing/transfer-pricing.component';
 
 
 export const routes: Routes = [
@@ -90,12 +91,11 @@ export const routes: Routes = [
               title:'setting wallet',
             },
             {
-              path: 'wallet-pricing',
-              component: WalletTransfPricingComponent,
-              title:'Wallet transf. pricing',
+              path: 'transfer-pricings',
+              component: TransferPricingComponent,
+              title:'Transfer-pricings',
             },
           ]
-
 
       },
       ]

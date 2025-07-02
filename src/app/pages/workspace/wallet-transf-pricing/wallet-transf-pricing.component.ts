@@ -6,10 +6,10 @@ import { WalletStore } from '@stores/wallet_store';
 import { WalletTPStore } from '@stores/walletTP_store';
 import { CountrySelectComponent } from '../wallet/country-select.component';
 import {MatListModule} from '@angular/material/list';
-import { TransferDirectionComponent } from './transfer-direction.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { heroPlus } from '@ng-icons/heroicons/outline';
+import { heroCheck, heroPlus } from '@ng-icons/heroicons/outline';
 import { PricingsFormComponent } from './pricings-form.component';
+import { TransferDirectionsComponent } from './transfer-directions.component';
 
 
 @Component({
@@ -17,12 +17,11 @@ import { PricingsFormComponent } from './pricings-form.component';
   standalone: true,
   imports: [
     CountrySelectComponent,
-    TransferDirectionComponent,
+    TransferDirectionsComponent,
     PricingsFormComponent,
     MatListModule,
-    NgIcon
   ],
-  viewProviders: [provideIcons({ heroPlus,})],
+  viewProviders: [provideIcons({ heroPlus,heroCheck})],
   templateUrl: './wallet-transf-pricing.component.html',
   styles: ``
 })
@@ -33,22 +32,20 @@ export class WalletTransfPricingComponent {
   country_store = inject(CountryStore)
   combinatedList : ICombination[] = []
   wallet_transfer_Pricing: IWalletTP | undefined = undefined
-  // = { _id: "",   wallet_source_id: "", wallet_target_id: "",  pricings:[] }
   title = "Gestion des tranches tarifaires / Transferts intra && inter-réseau"
 
   selectedCouple: ICombination | undefined = undefined
-  //  = {
-  //   w_source: {_id: '', country: "", wallet_logo: '', wallet_name: '', wallet_logo_filename: '' },
-  //   w_target: {_id: '', country: "", wallet_logo: '', wallet_name: '', wallet_logo_filename: '' }
-  // }
-
-
+  PricingArr: IWalletTP[] = []
   constructor() {
     effect(() => {
       this.combinatedList = this.wallet_store.walletCombinatedByCountry()
+      if (!this.combinatedList.length) {
+        this.selectedCouple = undefined
+      }
+      this.PricingArr = this.walletTpStore.walletTPS()
       this.wallet_transfer_Pricing = this.walletTpStore.Wallet_Combination_Princing_Range()
-      console.log("this.combinatedList : ", this.combinatedList)
-      console.log("this.wallet_transfer_Pricing : ", this.wallet_transfer_Pricing)
+      console.log('this.wallet_transfer_Pricing : ', this.wallet_transfer_Pricing )
+      console.log('this.PricingArr : ', this.PricingArr )
     })
   }
 
@@ -62,8 +59,8 @@ export class WalletTransfPricingComponent {
     this.selectedCouple = w_couple;
   }
 
-  addPriceRange() {
-    this.PricingsForm.addPricing()
-  }
+  // addPriceRange() {
+  //   this.PricingsForm.addPricing()
+  // }
 
 }

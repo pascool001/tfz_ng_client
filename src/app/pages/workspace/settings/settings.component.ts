@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit {
       case 'service':  this.router.navigate(["/workspace/settings/service"]); break;
       case 'transfer-type':  this.router.navigate(["/workspace/settings/transfer-type"]); break;
       case 'wallet':  this.router.navigate(["/workspace/settings/wallet"]); break;
-      case 'wallet-pricing':  this.router.navigate(["/workspace/settings/wallet-pricing"]); break;
+      case 'transfer-pricings':  this.router.navigate(["/workspace/settings/transfer-pricings"]); break;
       default:
         break;
     }

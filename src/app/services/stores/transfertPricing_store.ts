@@ -1,91 +1,74 @@
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from "@ngrx/signals";
 import { computed, inject } from "@angular/core";
 import { LocalStorageService } from "@utilities";
-import { WalletStoreType, IWallet, ICombination } from "@models/wallet";
 import { Notifier } from "@utilities";
-import { WalletApi } from "@backend/httpRequests/walletApi";
-// import { CountryStore } from "./country_store";
+import {IPricingRange, PricingStoreType} from "@models/transPricing"
+import { TransferPricingApi } from "@backend/httpRequests/transPricingApi";
 
 
-const initialStoreState: WalletStoreType = {
+const initialStoreState: PricingStoreType = {
     loading: false,
-    wallets: [],
-    countryId: "",
+    pricings: [],
+    transDirectionIds: {sourceId: "", targetId: ""},
     filter: { query: '', order: 'asc' },
 };
 
 
-export const WalletStore = signalStore(
+export const TransferPricingStore = signalStore(
     { providedIn: 'root' },
     withState(initialStoreState),
 
     withComputed((store) => ({
 
-        walletCount: computed(() => store.wallets().length),
-
-        walletList: computed(() => store.wallets().filter((w) => w.country === store.countryId())),
-
-        walletCombinatedByCountry: computed(() => {
-          let combinations: ICombination[] = []
-          let countryWallets: IWallet[] = store.wallets().filter((w) => w.country === store.countryId())
-          let source: IWallet[] = [...countryWallets]
-          let targets: IWallet[] = [...countryWallets]
-          source.forEach((srv: IWallet) => {
-            targets.forEach((tgt: IWallet) => {
-              combinations.push({w_source: srv, w_target: tgt, isActive: false})
-            })
-          })
-
-          return combinations
-        }),
-
-        filtered: computed(() => {
-            const country_id = store.countryId()
-            return store.wallets().filter((wallet:IWallet) => wallet.country == country_id ).filter((item:IWallet) => {
-                const source = item.wallet_name.trim().toLowerCase()
-                const searched_text = store.filter.query().trim().toLowerCase()
-                return source.includes(searched_text)
-            })
-        }),
-
+      pricingList: computed(() => {
+        const list = store.pricings().filter((item:IPricingRange) => {
+          return item.source_wallet == store.transDirectionIds().sourceId
+           && item.target_wallet == store.transDirectionIds().targetId
+        })
+        console.log("LIST: ", list)
+        return list
+      })
 
     })),
 
-    withMethods((store, Api = inject(WalletApi), notifier = inject(Notifier)) => ({
+    withMethods((store, Api = inject(TransferPricingApi), notifier = inject(Notifier)) => ({
 
         updateQuery(query: string): void {
           patchState(store, (state) => ({ filter: { ...state.filter, query } }));
         },
 
-        setCountyId(id:string): void {
-          patchState(store, {countryId: id})
+        setTranferSourceId(source_id:string) {
+          patchState(store, {transDirectionIds: {...store.transDirectionIds(), sourceId: source_id}})
         },
 
-        async add(data:IWallet): Promise<void> {
+        setTranferTargetId(target_id:string) {
+          patchState(store, {transDirectionIds: {...store.transDirectionIds(), targetId: target_id}})
+        },
+
+
+        async add(data:IPricingRange): Promise<void> {
             patchState(store, {loading: true });
             Api.add(data).then(async resp => {
-                patchState(store, {loading: false, wallets: [...store.wallets(), resp.data] });
+                patchState(store, {loading: false, pricings: [...store.pricings(), resp.data] });
                 notifier.notify({message: "Operation reussie", status: 'success'})
+                console.log("store.pricings : ", store.pricings())
               }).catch(Error => {
-                console.log('Country Adding Error: ', Error)
                 patchState(store, {loading: false,});
                 notifier.notify({message: "Operation échouée", status: 'error'})
             })
-
         },
 
 
-        async update(data:IWallet, id: string): Promise<void> {
+        async update(data:IPricingRange, id: string): Promise<void> {
             patchState(store, {loading: true });
 
             Api.update(data, id).then(async resp => {
                 patchState(store, {
                     loading: false,
-                    wallets: [...store.wallets().map(item => item._id === id ? resp.data : item )]
+                    pricings: [...store.pricings().map(item => item._id === id ? resp.data : item )]
                 });
                 notifier.notify({message: "Modification reussie", status: 'success'})
             }).catch(Error => {
-                console.log('updateCountry error: ', Error)
                 patchState(store, {loading: false});
                 notifier.notify({message: "Modification échouée !!", status: 'error'})
             })
@@ -97,10 +80,9 @@ export const WalletStore = signalStore(
                 let arr = resp.data.map((item:any) => {
                     return (item._doc) ? {image: item.image, ...item._doc} : item
                 })
-                patchState(store, { loading: false, wallets: [ ...arr] });
+                patchState(store, { loading: false, pricings: [ ...arr] });
             }).catch(err => {
-                console.log('GetALL error : ', err)
-                patchState(store, {loading: false, wallets: []});
+                patchState(store, {loading: false, pricings: []});
             })
         },
 
@@ -110,10 +92,9 @@ export const WalletStore = signalStore(
                 const {_id: deleted_id} = resp.data
                 patchState(store, {
                     loading: false,
-                    wallets:  [ ...store.wallets().filter((item:IWallet) => item._id !== deleted_id ) ]
+                    pricings:  [ ...store.pricings().filter((item:IPricingRange) => item._id !== deleted_id ) ]
                 });
             }).catch(err => {
-                console.log('Store deletion error: ', err)
                 patchState(store, {loading: false});
             })
         },
@@ -124,7 +105,7 @@ export const WalletStore = signalStore(
         const _storageService = inject(LocalStorageService)
         return {
                 onInit() {
-                    const localStore = _storageService.getItem<WalletStoreType>('walletStore');
+                    const localStore = _storageService.getItem<PricingStoreType>('WalletTPStore');
                     if (localStore) {
                         patchState(store, localStore)
                     }

@@ -39,8 +39,6 @@ import { WalletTPStore } from '@stores/walletTP_store';
 })
 export class TransferDirectionComponent {
   @Input() couple: ICombination|any
-  // couple = Input<ICombination|any>({} as ICombination )
-  // user = input<User>({} as User);
   OnclickCouple = output<ICombination>();
   walletTP_store = inject(WalletTPStore)
   isActive: boolean =true;

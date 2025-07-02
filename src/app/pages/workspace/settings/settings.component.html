@@ -52,17 +52,18 @@
             class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
              >
               <ng-icon name="heroClipboardDocumentCheck" class="text-2xl mr-1" [ngClass]="compName=='wallet'? ['text-lime-400']:['text-blue-700'] "  />
-                Wallet management
+                Wallet managment
             </a>
         </li>
-        <li role="presentation">
-            <a (click)="routeToComp('wallet-pricing')"
-             [ngClass]="compName=='wallet-pricing' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
+
+         <li role="presentation">
+            <a (click)="routeToComp('transfer-pricings')"
+             [ngClass]="compName=='transfer-pricings' ? ['bg-blue-700', 'dark:bg-blue-600', 'text-white',  'active'] :
             ['hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'dark:hover:text-white']"
             class="inline-flex items-center cursor-pointer px-2 py-3 rounded-lg w-full"
              >
-              <ng-icon name="heroClipboardDocumentCheck" class="text-2xl mr-1" [ngClass]="compName=='wallet-pricing'? ['text-lime-400']:['text-blue-700'] "  />
-                Wallets pricing
+              <ng-icon name="heroClipboardDocumentCheck" class="text-2xl mr-1" [ngClass]="compName=='transfer-pricings'? ['text-lime-400']:['text-blue-700'] "  />
+                Transfer Pricings
             </a>
         </li>
     </ul>

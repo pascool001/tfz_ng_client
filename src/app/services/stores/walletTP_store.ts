@@ -22,11 +22,7 @@ export const WalletTPStore = signalStore(
 
     withComputed((store) => ({
 
-      // descriptionDuPricing: computed(() => {
-      //   return {
-      //     logo_source
-      //   }
-      // }),
+
       activeCombinationId: computed(() => {
         const sourceId = store.wallet_combination()?.w_source._id;
         const targetId = store.wallet_combination()?.w_target._id
@@ -34,11 +30,15 @@ export const WalletTPStore = signalStore(
       }),
 
       Wallet_Combination_Princing_Range: computed(() => {
-        return store.walletTPS().find((WCPR) =>
+        console.log("store.wallet_combination() : ", store.wallet_combination())
+        const data = store.walletTPS().find((WCPR) =>
           WCPR.wallet_source_id == store.wallet_combination()?.w_source._id
           &&
           WCPR.wallet_target_id == store.wallet_combination()?.w_target._id
         )
+        console.log("store.walletTPS() : ", store.walletTPS())
+        console.log("Data / Wallet_Combination_Princing_Range : ", data)
+        return data
       })
 
     })),
@@ -49,7 +49,7 @@ export const WalletTPStore = signalStore(
           patchState(store, (state) => ({ filter: { ...state.filter, query } }));
         },
 
-        setCombination(combObj: ICombination) {
+        setCombination(combObj: ICombination|undefined) {
           // console.log("combObj : ", combObj)
           patchState(store, {wallet_combination: combObj})
         },
@@ -57,6 +57,7 @@ export const WalletTPStore = signalStore(
         async add(data:IWalletTP): Promise<void> {
             patchState(store, {loading: true });
             Api.add(data).then(async resp => {
+              console.log('resp.data : ', resp.data)
                 patchState(store, {loading: false, walletTPS: [...store.walletTPS(), resp.data] });
                 notifier.notify({message: "Operation reussie", status: 'success'})
               }).catch(Error => {
